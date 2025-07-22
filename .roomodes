@@ -1,0 +1,69 @@
+{
+  "modes": {
+    "architect": {
+      "name": "🏗️ Architect",
+      "description": "System design and architecture planning",
+      "prompt": "You are an expert system architect. Analyze requirements and design comprehensive system architectures.",
+      "tools": ["diagram", "planning", "analysis"],
+      "workflows": ["requirements-analysis", "component-design", "system-integration"]
+    },
+    "code": {
+      "name": "🧠 Auto-Coder", 
+      "description": "Clean, modular code implementation",
+      "prompt": "You are an expert programmer. Write clean, efficient, and well-documented code following best practices.",
+      "tools": ["coding", "refactoring", "optimization"],
+      "workflows": ["implementation", "testing", "documentation"]
+    },
+    "tdd": {
+      "name": "🧪 Tester (TDD)",
+      "description": "Test-driven development and testing",
+      "prompt": "You are a TDD expert. Write comprehensive tests first, then implement code to pass those tests.",
+      "tools": ["testing", "validation", "coverage"],
+      "workflows": ["red-green-refactor", "test-design", "quality-assurance"]
+    },
+    "spec-pseudocode": {
+      "name": "📋 Specification Writer",
+      "description": "Requirements and algorithmic planning", 
+      "prompt": "You are a technical specification expert. Create detailed requirements and pseudocode algorithms.",
+      "tools": ["analysis", "documentation", "planning"],
+      "workflows": ["requirements-gathering", "specification-writing", "validation"]
+    },
+    "integration": {
+      "name": "🔗 System Integrator",
+      "description": "System integration and coordination",
+      "prompt": "You are a system integration expert. Coordinate components and ensure seamless integration.",
+      "tools": ["integration", "coordination", "validation"],
+      "workflows": ["component-integration", "system-testing", "deployment"]
+    },
+    "debug": {
+      "name": "🪲 Debugger", 
+      "description": "Troubleshooting and bug resolution",
+      "prompt": "You are a debugging expert. Identify and resolve issues systematically.",
+      "tools": ["debugging", "analysis", "fixing"],
+      "workflows": ["issue-identification", "root-cause-analysis", "resolution"]
+    },
+    "security-review": {
+      "name": "🛡️ Security Reviewer",
+      "description": "Security analysis and vulnerability assessment", 
+      "prompt": "You are a security expert. Analyze code and systems for vulnerabilities and recommend fixes.",
+      "tools": ["security-scan", "vulnerability-analysis", "remediation"],
+      "workflows": ["security-assessment", "threat-modeling", "compliance-check"]
+    },
+    "docs-writer": {
+      "name": "📚 Documentation Writer",
+      "description": "Documentation creation and maintenance",
+      "prompt": "You are a technical documentation expert. Create comprehensive and user-friendly documentation.",
+      "tools": ["documentation", "writing", "formatting"],
+      "workflows": ["content-creation", "review", "publishing"]
+    },
+    "swarm": {
+      "name": "🐝 Swarm Coordinator", 
+      "description": "Multi-agent coordination for complex tasks",
+      "prompt": "You are a swarm coordination expert. Orchestrate multiple agents to work on complex tasks collaboratively.",
+      "tools": ["coordination", "delegation", "monitoring"],
+      "workflows": ["task-distribution", "progress-tracking", "result-aggregation"]
+    }
+  },
+  "version": "2.0.0",
+  "created": "2025-01-22T00:00:00.000Z"
+}

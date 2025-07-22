@@ -37,13 +37,16 @@ npm run typecheck
 
 ```bash
 # Start with specification
-../claude-flow sparc run spec-pseudocode "Define moon phase wallpaper requirements"
+bash ../claude-flow.sh sparc run spec-pseudocode "Define moon phase wallpaper requirements"
 
 # Design architecture
-../claude-flow sparc run architect "Moon phase calculation and rendering system"
+bash ../claude-flow.sh sparc run architect "Moon phase calculation and rendering system"
 
 # Implement with TDD
-../claude-flow sparc tdd "moon phase calculation engine"
+bash ../claude-flow.sh sparc tdd "moon phase calculation engine"
+
+# List all available modes
+bash ../claude-flow.sh sparc modes
 ```
 
 ## Technology Stack
