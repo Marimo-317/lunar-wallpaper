@@ -16,7 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "vue": "^3.3.0",
-    "canvas": "^2.11.0"
+    "canvas": "^2.11.0",
+    "@octokit/rest": "^20.0.2",
+    "axios": "^1.6.2",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
@@ -24,9 +27,6 @@
     "vitest": "^0.34.0",
     "eslint": "^8.0.0",
     "typescript": "^5.0.0",
-    "vue-tsc": "^1.8.0",
-    "@octokit/rest": "^20.0.2",
-    "axios": "^1.6.2",
-    "winston": "^3.17.0"
+    "vue-tsc": "^1.8.0"
   }
 }
