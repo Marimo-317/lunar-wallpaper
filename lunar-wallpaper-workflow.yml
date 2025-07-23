@@ -1,0 +1,119 @@
+name: Claude Flow Auto Issue Resolver
+on:
+  issues:
+    types: [opened, edited, labeled, reopened]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  auto-resolve:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event.issue != null || github.event.comment != null) &&
+      (contains(github.event.issue.body || github.event.comment.body, '@claude-flow-automation') ||
+       contains(github.event.issue.body || github.event.comment.body, '@claude'))
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+      actions: read
+      id-token: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install minimal dependencies
+        run: |
+          # Check if package.json exists
+          if [ -f "package.json" ]; then
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+          else
+            # Initialize npm project if needed
+            npm init -y
+          fi
+          npm install -g @anthropic-ai/claude-code@latest
+      
+      - name: Claude Code Integration
+        uses: anthropics/claude-code-action@v0.0.33
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          claude-code-oauth-token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
+          
+      - name: Auto-resolve with Claude
+        if: contains(github.event.issue.body || github.event.comment.body, '@claude-flow-automation')
+        run: |
+          echo "🤖 Claude Flow Automation Triggered"
+          
+          # Create a simple automation script inline
+          cat > auto-resolve.js << 'EOF'
+          const { Octokit } = require('@octokit/rest');
+          
+          async function autoResolve() {
+              const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+              const issue = {
+                  number: process.env.ISSUE_NUMBER,
+                  title: process.env.ISSUE_TITLE || 'Issue',
+                  body: process.env.ISSUE_BODY || ''
+              };
+              
+              console.log(`📊 Analyzing issue #${issue.number}: ${issue.title}`);
+              
+              // Post initial comment
+              await octokit.rest.issues.createComment({
+                  owner: process.env.GITHUB_REPOSITORY_OWNER,
+                  repo: process.env.GITHUB_REPOSITORY_NAME,
+                  issue_number: parseInt(issue.number),
+                  body: `🤖 **Claude Flow Automation Activated**
+          
+          I'm analyzing this issue and will attempt to create a solution automatically.
+          
+          **Status:** 🔄 Processing...`
+              });
+              
+              // Use Claude Code to analyze and solve
+              console.log('🧠 Using Claude Code to analyze and implement solution...');
+              
+              // Simple implementation approach
+              const branchName = `fix/issue-${issue.number}`;
+              console.log(`📝 Working on branch: ${branchName}`);
+              
+              // The actual solution will be implemented by Claude Code action
+              console.log('✅ Claude Code integration will handle the implementation');
+          }
+          
+          autoResolve().catch(console.error);
+          EOF
+          
+          # Install required packages
+          npm install @octokit/rest
+          
+          # Run the automation
+          node auto-resolve.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+      
+      - name: Update Issue Status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Automation completed successfully"
+          else
+            echo "⚠️ Automation encountered issues"
+          fi
